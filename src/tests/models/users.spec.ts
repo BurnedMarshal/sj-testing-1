@@ -9,7 +9,7 @@ describe('User.find()', () => {
   });
 });
 
-describe('User.create()', () => {
+describe.skip('User.create()', () => {
   /* before('Delete all users from DB test', async () => {
     await User.remove({});
   }); */
