@@ -6,6 +6,14 @@ const userSchema = mongoose.Schema({
   surname: String,
   age: Number,
   email: String,
+  created_at: Number,
+});
+
+userSchema.pre('save', function(next) {
+  if (this.isNew && this.created_at === undefined) {
+    this.created_at = Date.now();
+  }
+  next();
 });
 
 const User = mongoose.model('User', userSchema);

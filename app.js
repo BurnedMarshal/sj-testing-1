@@ -1,23 +1,23 @@
+/* eslint-disable quotes */
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
 // Import base routes
-const routes = require('./routes/index');
+const indexRoutes = require('./routes/index');
 const usersRoutes = require('./routes/users');
 
 // Database configuration
-const host = 'localhost';
-let dbName = 'SJ-testing-1';
+const host = process.env.MONGO_HOST || 'localhost';
+let dbName = process.env.MONGO_DB || 'SJ-testing-1';
 
 if (process.env.NODE_ENV === 'test') {
-  dbName = 'SJ-testing-1-test';
+  dbName = `${dbName}-test`;
 }
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://'+ host + '/' + dbName, {useNewUrlParser: true});
-
 const db = mongoose.connection;
 db.on('error', function() {
   console.error('Connection error!');
@@ -41,9 +41,15 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup base routes
-app.use('/', routes);
+app.use('/', indexRoutes);
 app.use('/users', usersRoutes);
-
+app.get('/login/:test', (req, res) => {
+  res.json({baseUrl: req.baseUrl, path: req.path, query: req.query});
+});
+app.get('/login', (req, res) => {
+  res.json({baseUrl: req.baseUrl, path: req.path, query: req.query});
+});
+// --------------
 // Catch 404 errors
 app.use(function(req, res, next) {
   const err = new Error('Not Found');
