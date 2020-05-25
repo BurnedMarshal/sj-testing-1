@@ -9,3 +9,8 @@ script:
   - npm test
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+deploy:
+  provider: heroku
+  app: sj-testing-1
+  api_key:
+    secure: WOl9F8wNBp4hbCNNIIV77uDA4uYr6609YtTaCAnjBqTAC3wtbdJEKKMQl9WZs64frv8WwbeLT4hCM3TlXxJY1LGlz8mnEiKz14e3UAF4+HZwhFADRFQBIQW/jztmQsOyoh7vBx9JNSAOWszw/0xBErW2fxjgB9tJ0kfLhayct3kHdXdV9Erm1qhQgAnazrp+tZPgdjmTsWNwfR6aOZ2I04L1vmnR3qYsTT//OvtlqtePsKDRg8riF7Utq9kBL4VlGps/OjJOGc47vzQPO7JH8HEOeab6B2BdxTLFDPXLn2qgC8TK1Q49eFo4pXaQsGfHywHdYjmHo3bSztrF3xbqWvgj1Uh/aNMRM9Ohvfcul92f9A3J/Ij+D2Mxv274ZMn86V9gONvZ6R2glBOIxrnw+fp3rr5u7q+Ne1pKEIZWUj2iYAZMGL6POTzqCOSp7P0f6xDAe28ZG/4t2XrjQIov0nh+tdwyA1MLDblEayEQxt0VCuq2lz7AhOYvWvDTT4n7C06ZiY6Rmdx0q5rc7ZP1Px7I6tYzQOztV5QP4nq2nzdWeADfR8QU77+uhu1WCJWOVqj/h3WfGy4crvDGNUUn7k813zSQrqKas5A2T1GUaLVbUdTCplLUHCvnz5RfsjIJQ32QDtLUCqe4KWh+LVIOdHMwMFVrt9dtWEpHjKM69rI=
