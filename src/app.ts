@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
-const express = require('express');
-const path = require('path');
+import express from 'express';
+import path from 'path';
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
@@ -52,7 +52,7 @@ app.get('/login', (req, res) => {
 // --------------
 // Catch 404 errors
 app.use(function(req, res, next) {
-  const err = new Error('Not Found');
+  const err: any = new Error('Not Found');
   err.status = 404;
   next(err);
 });

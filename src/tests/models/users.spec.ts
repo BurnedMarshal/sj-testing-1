@@ -1,4 +1,4 @@
-const chai = require('chai');
+import chai from 'chai';
 const expect = chai.expect;
 const User = require('../../models/users');
 
@@ -13,7 +13,7 @@ describe('User.create()', () => {
   /* before('Delete all users from DB test', async () => {
     await User.remove({});
   }); */
-  const userDocuments = [];
+  const userDocuments: any[] = [];
   after('Delete all users from DB test', async () => {
     userDocuments.forEach(async (user) => {
       await user.remove();

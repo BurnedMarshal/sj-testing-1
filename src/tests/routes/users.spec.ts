@@ -1,5 +1,5 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
 const app = require('../../app');
 const expect = chai.expect;
 
@@ -21,7 +21,7 @@ describe('[INDEX] GET: /users', () => {
   });
 
   describe('Users inside database', () => {
-    let createdUser = undefined;
+    let createdUser: any = undefined;
     before('create user', async () => {
       createdUser = await createUser();
     });
@@ -49,7 +49,7 @@ describe('[SHOW] GET: /users/:id', () => {
   });
 
   describe('Users inside database', () => {
-    let createdUser = undefined;
+    let createdUser: any = undefined;
     before('create user', async () => {
       createdUser = await createUser();
     });

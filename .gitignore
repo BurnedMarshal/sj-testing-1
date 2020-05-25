@@ -3,3 +3,4 @@ package-lock.json
 coverage
 .env
 .nyc_output
+dist

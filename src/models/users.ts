@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
 
 // eslint-disable-next-line new-cap
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
   name: String,
   surname: String,
   age: Number,
@@ -10,8 +10,8 @@ const userSchema = mongoose.Schema({
 });
 
 userSchema.pre('save', function(next) {
-  if (this.isNew && this.created_at === undefined) {
-    this.created_at = Date.now();
+  if (this.isNew && this['created_at'] === undefined) {
+    this['created_at'] = Date.now();
   }
   next();
 });

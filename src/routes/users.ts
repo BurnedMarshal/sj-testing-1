@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 // eslint-disable-next-line new-cap
 const router = express.Router();
 const {check, validationResult} = require('express-validator/check');
@@ -54,7 +54,7 @@ router.put('/:id', function(req, res) {
         if (!user) {
           return res.status(404).json({message: 'Utente non trovato'});
         }
-        for (key in req.body) {
+        for (const key in req.body) {
           if (req.body.hasOwnProperty(key)) {
             user[key] = req.body[key];
           }
