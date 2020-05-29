@@ -11,6 +11,8 @@ chai.use(chaiHttp);
 
 const {expectJson, createUser} = require('./utils/index');
 
+const expectedNotFoundError = {message: 'Utente non trovato'};
+
 describe('[INDEX] GET: /users', () => {
   it('Empty Array if no users are found', async () => {
     const result = await chai.request(app).get('/users');
@@ -46,6 +48,8 @@ describe('[SHOW] GET: /users/:id', () => {
         .get(`/users/${newObjectId}`);
     expectJson(result);
     expect(result.status).to.be.equal(404);
+    expect(result).to.have.property('body');
+    expect(result.body).to.be.deep.equals(expectedNotFoundError);
   });
 
   describe('Users inside database', () => {
@@ -105,3 +109,30 @@ describe('[CREATE] POST: /users', () => {
   });
 });
 
+describe('[DELETE] DELETE: /users/:id', () => {
+  it('should return 404 status if user don\'t exists', async () => {
+    const newObjectId = mongoose.Types.ObjectId();
+    const result = await chai.request(app)
+        .delete(`/users/${newObjectId}`);
+    expect(result).to.have.property('status', 404);
+    expect(result).to.have.property('body');
+    expect(result.body).to.be.deep.equals(expectedNotFoundError);
+  });
+  describe('With an existing user', () => {
+    let createdUser: any = undefined;
+    beforeEach('create user', async () => {
+      createdUser = await createUser();
+    });
+    afterEach('delete user', () => {
+      createdUser ? createdUser.remove() : console.log('missing user');
+    });
+    it('Delete existing user', async () => {
+      const result = await chai.request(app)
+          .delete(`/users/${createdUser._id.toString()}`);
+      expect(result).to.have.property('status', 200);
+      expect(result).to.have.property('body');
+      expect(result.body).to.be.deep.equals({message: 'Utente eliminato correttamente'})
+    });
+  })
+  
+});

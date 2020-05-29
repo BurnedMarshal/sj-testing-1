@@ -5,6 +5,8 @@ const {check, validationResult} = require('express-validator/check');
 
 const User = require('../models/users');
 
+const notFoundResponse = {message: 'Utente non trovato'};
+
 // INDEX
 router.get('/', function(req, res) {
   User.find(function(err, users) {
@@ -16,7 +18,7 @@ router.get('/', function(req, res) {
 router.get('/:id', function(req, res) {
   User.findOne({_id: req.params.id}, function(err, user) {
     if (err) return res.status(500).json({error: err});
-    if (!user) return res.status(404).json({message: 'Utente non trovato'});
+    if (!user) return res.status(404).json(notFoundResponse);
     res.json(user);
   });
 });
@@ -52,7 +54,7 @@ router.put('/:id', function(req, res) {
       .exec(function(err, user) {
         if (err) return res.status(500).json({error: err});
         if (!user) {
-          return res.status(404).json({message: 'Utente non trovato'});
+          return res.status(404).json(notFoundResponse);
         }
         for (const key in req.body) {
           if (req.body.hasOwnProperty(key)) {
@@ -71,7 +73,7 @@ router.delete('/:id', function(req, res) {
   User.findOne({_id: req.params.id})
       .exec(function(err, user) {
         if (err) return res.status(500).json({error: err});
-        if (!user) return res.status(404).json({message: 'Utente non trovato'});
+        if (!user) return res.status(404).json(notFoundResponse);
         User.remove({_id: req.params.id}, function(err) {
           if (err) return res.status(500).json({error: err});
           res.json({message: 'Utente eliminato correttamente'});
